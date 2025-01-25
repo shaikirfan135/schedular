@@ -9,13 +9,13 @@ class JobDetails {
     }
 
     greet() {
-        console.log(`Table Name : ${this.tableName} 
-            and I am ${this.selectColumns} 
-            years old.${this.whereClause} is a
-            ${this.schema} was
-            ${this.orderbyColumn} and
-            ${this.sortDirection} end`);
-      }
+        console.log(`TableName : ${this.tableName} \n
+            SelectedColumns : ${this.selectColumns} \n
+            Where Clause : ${this.whereClause} \n
+            Schema Name : ${this.schema} \n
+            OrderBy Column : ${this.orderbyColumn} \n
+            SortDirection : ${this.sortDirection}`);
+    }
 
 }
 

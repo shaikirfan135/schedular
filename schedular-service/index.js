@@ -39,7 +39,7 @@ const loadFiles = () => {
 
 }
 
-app.get('/', (req, res) => {
+app.get('/loadJobDetails', (req, res) => {
 	loadFiles();
 	res.send(jobDetailsObj);
 })
