@@ -1,0 +1,26 @@
+[
+    {
+        "tablename": "cl_batch_process_status",
+        "selectcolumns": "batch_id,start_time,end_time,status",
+        "whereclause": "",
+        "schemaname": "",
+        "orderbycolumn": "created_time",
+        "sortdirection": "desc"
+    },
+    {
+        "tablename": "cl_qrtz_job_trigger",
+        "selectcolumns": "trigger_name,job_name",
+        "whereclause": "",
+        "schemaname": "",
+        "orderbycolumn": "",
+        "sortdirection": "desc"
+    },
+    {
+        "tablename": "cl_qrtz_job_fire_trigger",
+        "selectcolumns": "job_name,next_fire_time,prev_fire_time,start_time",
+        "whereclause": "",
+        "schemaname": "",
+        "orderbycolumn": "",
+        "sortdirection": "desc"
+    }
+]
