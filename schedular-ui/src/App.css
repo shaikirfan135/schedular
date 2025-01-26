@@ -203,10 +203,21 @@ tr > :first-child {
 /* Start of Select Box CSS */
 
 .box {
-  position: absolute;
-  top: 50%;
-  left: 20%;
+  position: relative;
+  /* top: 50%; */
+  /* left: 20%; */
+  /* margin-left: auto; */
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
   transform: translate(-50%, -50%);
+}
+
+.element {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .box select {

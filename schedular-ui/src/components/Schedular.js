@@ -5,7 +5,8 @@ const JobDetailsList = () => {
     const [jobDetailsData, setJobDetailsData] = useState([]);
     const [tableData, setTableData] = useState([]);
     const [selectedTable, setSelectedTable] = useState('');
-
+    const [columns, setColumns] = useState([]);
+    
     useEffect(() => {
         getJobDetails();
 
@@ -26,16 +27,16 @@ const JobDetailsList = () => {
         // //     userElements.push(<p key={i}>{result[i]}</p>);
         // // }
         console.log('result : ', result)
-        setTableData(result);
+        setTableData(result.selectedTableResult);
+        setJobDetailsData(result.jobDetailsList);
+        const columnNames = result.selectedTable.selectColumns
+        setColumns(columnNames.split(","));
+        // setSelectedTableForColumnNames(result.selectedTable);
         setSelectedTable(tableSelcted);
-        let result1 = await fetch('http://localhost:5000/loadJobDetails');
-        result1 = await result1.json();
-        setJobDetailsData(result1);
     };
 
     return (
         <div className='box'>
-
             <label htmlFor="country-select" className='selectedtable'>Select Table: </label>
             <select id="country-select" value={selectedTable} onChange={onSelectedTableChange}>
                 <option value="">--Select a Table--</option>
@@ -48,16 +49,9 @@ const JobDetailsList = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>Click Table to be Loaded</th>
-                            <th>Click Table to be Loaded</th>
-                            <th>Click Table to be Loaded</th>
-                            {/* <th>S.No</th>
-                            <th>Table Name</th>
-                            <th>Selected Columns</th>
-                            <th>Where Clause</th>
-                            <th>Schema</th>
-                            <th>Orderby</th>
-                            <th>Sorted </th> */}
+                            {columns.map((column, index) => (
+                                <th key={index}>{column}</th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody>
@@ -75,7 +69,6 @@ const JobDetailsList = () => {
                     </tbody>
                 </table>
             </div>
-
         </div>
     )
 
