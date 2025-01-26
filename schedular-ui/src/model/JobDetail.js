@@ -1,4 +1,4 @@
-export default class JobDetails {
+export default class JobDetail {
     constructor(tableName, selectColumns, whereClause, schema, orderbyColumn, sortDirection) {
         this.tableName = tableName;
         this.selectColumns = selectColumns;
