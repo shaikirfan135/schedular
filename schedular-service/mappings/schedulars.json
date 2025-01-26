@@ -22,5 +22,21 @@
         "schemaname": "",
         "orderbycolumn": "",
         "sortdirection": "desc"
+    },
+    {
+        "tablename": "user",
+        "selectcolumns": "name,password,user_type",
+        "whereclause": "",
+        "schemaname": "",
+        "orderbycolumn": "name",
+        "sortdirection": "asc"
+    },
+    {
+        "tablename": "asset_beneficiary_info",
+        "selectcolumns": "ASSET_ID,BENEFICIARY_NAME,OWNERSHIP_PERCENT,BENEFICIARYSAMEASOWNER_FLAG,ACTIVE_FLAG",
+        "whereclause": "",
+        "schemaname": "",
+        "orderbycolumn": "",
+        "sortdirection": ""
     }
 ]

@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const fs = require('fs');
 
-// const conn = require('./utils/mysqlutils');
+const connection = require('./utils/mysqlutils');
 const schedularFilePath = require('./utils/mappingsparser');
 const JobDetails = require('./model/jobdetail');
 
@@ -19,7 +19,7 @@ app.use(cors());
 let jobDetailsObj = [];
 
 const loadFiles = () => {
-	console.log('schedularFilePath : ', schedularFilePath)
+	//console.log('schedularFilePath : ', schedularFilePath)
 	// fs.readFile(schedularFilePath, 'utf8',(err, item) => {
 	// 	//const jsonData = JSON.parse(item);
 	// 	console.log(item);
@@ -35,7 +35,7 @@ const loadFiles = () => {
 	//console.log(jobDetailsObj);
 
 	// You can also call methods on the Person objects
-	jobDetailsObj.forEach(jobDetails => jobDetails.greet());
+	//jobDetailsObj.forEach(jobDetails => jobDetails.greet());
 
 }
 
@@ -43,5 +43,43 @@ app.get('/loadJobDetails', (req, res) => {
 	loadFiles();
 	res.send(jobDetailsObj);
 })
+
+app.get('/loadTableDetails/:key', async (req, res) => {
+	loadFiles();
+	//console.log('req key : ', req.params.key);
+	try {
+		const reqParam = req.params.key;
+		const selectedTable = jobDetailsObj.find(job => job.tableName === reqParam);
+		console.log(`reqParam : ${reqParam} and selectedTable : ${selectedTable}`)
+		if (selectedTable !== '' && selectedTable !== undefined) {
+			const queryStr = prepareQuery(selectedTable);
+			console.log('prepared query : ', queryStr.trim())
+			//call the db, list of results will get here
+			//set the selectedTable and the above db results in an object
+			//selectedTable to show the ui header name 
+			//where as results are to display column data
+			// const results = await conn.execute(query);
+
+			const [rows, fields] = await connection.promise().query(queryStr);
+
+			console.log('Data : ',rows);
+			// console.log('Types of Fields : ' + fields);
+
+			res.send(rows);
+
+		} else {
+			res.send(`No matching Table Found ${reqParam}, please contact support!`);
+		}
+	} catch (err) {
+		res.send('Error occured during processing, please contact support! ' + err);
+	}
+
+})
+
+const prepareQuery = (obj) => {
+	const tableName = obj.schema ? obj.schema + '.' + obj.tableName : obj.tableName;
+	const columnOrder = obj.orderbyColumn ? 'order by ' + obj.orderbyColumn + ' ' + obj.sortDirection : '' ;
+	return `select ${obj.selectColumns} from ${tableName} ${columnOrder}`;
+}
 
 app.listen(5000);
