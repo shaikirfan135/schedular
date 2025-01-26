@@ -5,6 +5,7 @@ const fs = require('fs');
 const connection = require('./utils/mysqlutils');
 const schedularFilePath = require('./utils/mappingsparser');
 const JobDetails = require('./model/jobdetail');
+const TableDataResult = require('./model/tabledataresult');
 
 
 
@@ -62,10 +63,11 @@ app.get('/loadTableDetails/:key', async (req, res) => {
 
 			const [rows, fields] = await connection.promise().query(queryStr);
 
-			console.log('Data : ',rows);
+			const result = new TableDataResult(selectedTable, jobDetailsObj, rows);
+			console.log('Data : ',result);
 			// console.log('Types of Fields : ' + fields);
 
-			res.send(rows);
+			res.send(result);
 
 		} else {
 			res.send(`No matching Table Found ${reqParam}, please contact support!`);
